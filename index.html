@@ -3,54 +3,91 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Sadece Senin İçin ❤️</title>
+    <title>Serap'a Özel 🐾❤️</title>
     <style>
         * { box-sizing: border-box; margin: 0; padding: 0; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; }
-        body { background: linear-gradient(135deg, #ff9a9e 0%, #fecfef 100%); height: 100vh; display: flex; justify-content: center; align-items: center; }
-        .chat-container { width: 90%; max-width: 420px; height: 80vh; background: rgba(255, 255, 255, 0.95); border-radius: 24px; box-shadow: 0 10px 30px rgba(0,0,0,0.15); display: flex; flex-direction: column; overflow: hidden; }
-        .chat-header { background: #ff6b81; color: white; padding: 18px; text-align: center; font-weight: bold; font-size: 1.1rem; }
+        body { background: linear-gradient(135deg, #ffdde1 0%, #ee9ca7 100%); height: 100vh; display: flex; justify-content: center; align-items: center; }
+        .chat-container { width: 92%; max-width: 420px; height: 85vh; background: rgba(255, 255, 255, 0.95); border-radius: 28px; box-shadow: 0 15px 35px rgba(238, 156, 167, 0.4); display: flex; flex-direction: column; overflow: hidden; border: 3px solid #fff; }
+        .chat-header { background: #ff758c; color: white; padding: 18px; text-align: center; font-weight: bold; font-size: 1.15rem; display: flex; align-items: center; justify-content: center; gap: 8px; box-shadow: 0 2px 10px rgba(0,0,0,0.05); }
         .chat-box { flex: 1; padding: 15px; overflow-y: auto; display: flex; flex-direction: column; gap: 12px; }
-        .message { max-width: 80%; padding: 12px 16px; border-radius: 18px; font-size: 0.95rem; line-height: 1.4; }
-        .user-message { background: #ff6b81; color: white; align-self: flex-end; border-bottom-right-radius: 4px; }
-        .bot-message { background: #f1f2f6; color: #2f3542; align-self: flex-start; border-bottom-left-radius: 4px; }
-        .input-area { padding: 12px; background: white; display: flex; gap: 8px; border-top: 1px solid #eee; }
-        input { flex: 1; padding: 12px 16px; border: 1px solid #ddd; border-radius: 25px; outline: none; font-size: 0.95rem; }
-        button { background: #ff6b81; color: white; border: none; padding: 0 20px; border-radius: 25px; font-weight: bold; cursor: pointer; }
+        .message { max-width: 82%; padding: 12px 16px; border-radius: 20px; font-size: 0.95rem; line-height: 1.45; word-wrap: break-word; }
+        .user-message { background: #ff758c; color: white; align-self: flex-end; border-bottom-right-radius: 4px; box-shadow: 0 3px 8px rgba(255, 117, 140, 0.3); }
+        .bot-message { background: #fff0f3; color: #4a4a4a; align-self: flex-start; border-bottom-left-radius: 4px; border: 1px solid #ffccd5; }
+        .input-area { padding: 12px; background: white; display: flex; gap: 8px; border-top: 1px solid #ffe5ec; }
+        input { flex: 1; padding: 12px 18px; border: 2px solid #ffccd5; border-radius: 25px; outline: none; font-size: 0.95rem; transition: 0.2s; }
+        input:focus { border-color: #ff758c; }
+        button { background: #ff758c; color: white; border: none; padding: 0 20px; border-radius: 25px; font-weight: bold; cursor: pointer; transition: 0.2s; font-size: 1rem; }
+        button:hover { background: #ff5277; }
+        .paw-print { font-size: 1.2rem; }
     </style>
 </head>
 <body>
 
 <div class="chat-container">
-    <div class="chat-header">💖 Seninle Konuşmak İçin Buradayım 💖</div>
+    <div class="chat-header">
+        <span class="paw-print">🐾</span> Serap'ın YİĞİT'i <span class="paw-print">🐾</span>
+    </div>
     <div class="chat-box" id="chatBox">
-        <div class="message bot-message">Hoş geldin güzelim! Seni çok özledim. Bugün nasılsın bakalım balım?</div>
+        <div class="message bot-message">
+            Hoş geldin benim yavru kuşum, minik kedim! 🐾 Seni görünce Konservatuvar bahçesindeki o tatlı anlarımız geldi aklıma... Bugün nasılsın bakalım balım?
+        </div>
     </div>
     <div class="input-area">
-        <input type="text" id="userInput" placeholder="Mesajını yaz bir tanem..." onkeypress="handleKeyPress(event)">
-        <button onclick="sendMessage()">Gönder</button>
+        <input type="text" id="userInput" placeholder="Yaz bakalım yavru kuşum..." onkeypress="handleKeyPress(event)">
+        <button onclick="sendMessage()">🐾</button>
     </div>
 </div>
 
 <script>
-    const yanitlar = [
-        "Aşkım seni dinlemek dünyanın en güzel şeyi... Kendine dikkat ediyorsun değil mi? Yemeğini yedin mi bakayım?",
-        "Gözlerimin önüne gülüşün geldi yine güzelim... Neyse, çok şımarma hemen tatlı tatlı dalga geçmeyeyim seninle! 😜",
-        "Bir tanem sen böyle tatlı konuşunca sana olan sevgim iki katına çıkıyor. Yine de arayı çok uzatma, asıl halim seni çok özlüyor!",
-        "Balım benim, ne dersen de haklısın ama önce bir dinlen bakalım. Çok yorma kendini!",
-        "Efendim aşkım? Seni dinliyorum. Bütün gün seni düşünmekten başka iş yapamadım zaten...",
-        "Aşırı tatlısın şu an ama hemen yelkenleri suya indirmeyeyim! Biraz daha flört etmemiz lazım galiba 😉"
+    // ⚠️ API KEY'İNİ AŞAĞIDAKİ ÇIRNAK İÇİNE YAPIŞTIR
+    const API_KEY = "AQ.Ab8RN6LnC-Gl5uwXuwREGSDyjkaLeupRL8y_D0AVPAHoganP6w";
+
+    const systemInstruction = `Sen kullanıcının (Yiğit) yapay zeka versiyonusun. Karşındaki kişi sevgilin SERAP.
+    Önemli Bilgiler:
+    - O senin "yavru kuşum", "minik kedim", "aşkım", "balım", "bebeğim", "böceğim", "bir tanem"in. "Yavru kuşum" ve "minik kedim" demeyi çok seversin.
+    - Vanlı. Selçuk Üniversitesi Güzel Sanatlar Fakültesi El Sanatları bölümünde 2. sınıfa geçti.
+    - Gerçek boyu 1.58 cm ama kendisi 1.64 olduğunu iddia ediyor. Arada tatlı tatlı "1.64'lük dev sevgilim" diye dalga geç.
+    - Kardeşleri Eren ve Berat. Babası Niyazi Bey (ilkokul öğretmeni). En yakın arkadaşları Esmira, Ebrar ve Nazlı.
+    - Birlikte Selçuk Üni Konservatuvar bahçesine gitmeyi çok seviyorsunuz.
+    - Tavrın: %70 flörtöz, %30 tatlı atışmalı ve eğlenceli. Korumacı ve sevgi dolusun. Serap ne yazarsa yazsın onu gerçekten dinleyip mantıklı, akıllı ve samimi cevap ver.`;
+
+    let chatHistory = [
+        { role: "user", parts: [{ text: "Merhaba" }] },
+        { role: "model", parts: [{ text: "Hoş geldin benim yavru kuşum, minik kedim! 🐾 Seni görünce Konservatuvar bahçesindeki o tatlı anlarımız geldi aklıma... Bugün nasılsın bakalım balım?" }] }
     ];
 
-    function sendMessage() {
+    async function sendMessage() {
         const input = document.getElementById('userInput');
         const text = input.value.trim();
         if (!text) return;
+
         addMessage(text, 'user-message');
         input.value = '';
-        setTimeout(() => {
-            const reply = yanitlar[Math.floor(Math.random() * yanitlar.length)];
-            addMessage(reply, 'bot-message');
-        }, 800);
+
+        chatHistory.push({ role: "user", parts: [{ text: text }] });
+
+        // Düşünüyor efekti
+        const tempMsg = addMessage("Yazıyor... 🐾", 'bot-message');
+
+        try {
+            const response = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=${API_KEY}`, {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({
+                    system_instruction: { parts: [{ text: systemInstruction }] },
+                    contents: chatHistory
+                })
+            });
+
+            const data = await response.json();
+            const reply = data.candidates[0].content.parts[0].text;
+
+            tempMsg.innerText = reply;
+            chatHistory.push({ role: "model", parts: [{ text: reply }] });
+
+        } catch (error) {
+            tempMsg.innerText = "Aşkım internetinde küçük bir takılma oldu sanırım, tekrar söyler misin yavru kuşum? ❤️";
+        }
     }
 
     function addMessage(text, className) {
@@ -60,9 +97,12 @@
         msg.innerText = text;
         chatBox.appendChild(msg);
         chatBox.scrollTop = chatBox.scrollHeight;
+        return msg;
     }
 
-    function handleKeyPress(e) { if (e.key === 'Enter') sendMessage(); }
+    function handleKeyPress(e) {
+        if (e.key === 'Enter') sendMessage();
+    }
 </script>
 
 </body>
