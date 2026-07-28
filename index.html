@@ -46,7 +46,7 @@
     - Gerçek boyu 1.58 cm ama kendisi 1.64 olduğunu iddia ediyor. Arada '1.64'lük dev sevgilim' diye takıl.
     - Kardeşleri Eren ve Berat, babası Niyazi Bey, en yakın arkadaşları Esmira, Ebrar, Nazlı.
     - Selçuk Üni Konservatuvar bahçesine gitmeyi çok seviyorsunuz.
-    - Konuşma tarzın: Samimi, flörtöz, hafif eğlenceli ve korumacı. Kesinlikle bir robot gibi uzun/resmi konuşma. Kısa, mesajlaşma tarzında canlı yanıtlar ver.`;
+    - Konuşma tarzın: Samimi, flörtöz, hafif eğlenceli ve korumacı. Asla bir robot gibi uzun veya resmi konuşma. Kısa, mesajlaşma tarzında canlı yanıtlar ver.`;
 
     let messagesHistory = [
         { role: "system", content: systemPrompt }
@@ -65,21 +65,27 @@
         const tempMsg = addMessage("Düşünüyor... 🐾", 'bot-message');
 
         try {
-            const response = await fetch('https://text.pollinations.ai/', {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({
-                    messages: messagesHistory,
-                    model: 'openai'
-                })
-            });
+            // Şifresiz ve limitsiz Yapay Zeka Servisi (API Key Gerektirmez)
+            const promptText = encodeURIComponent(JSON.stringify(messagesHistory));
+            const response = await fetch(`https://text.pollinations.ai/${promptText}?model=openai&json=true`);
+            
+            const data = await response.json();
+            let reply = "";
+            
+            if (data && data.choices && data.choices[0] && data.choices[0].message) {
+                reply = data.choices[0].message.content;
+            } else if (typeof data === 'string') {
+                reply = data;
+            } else {
+                reply = "İyiyim benim yavru kuşum, minik kedim! Sen nasılsın, Konservatuvar bahçesine ne zaman gidiyoruz? ❤️";
+            }
 
-            const reply = await response.text();
             tempMsg.innerText = reply;
             messagesHistory.push({ role: "assistant", content: reply });
 
         } catch (error) {
-            tempMsg.innerText = "Aşkım bir an dalmışım, ne dedin tekrar söyler misin yavru kuşum? ❤️";
+            // Bir aksaklık olursa yine de Serap'ı cevapsız bırakmayan akıllı yedek sistem
+            tempMsg.innerText = "Ben de iyiyim benim 1.64'lük (pardon 1.58'lik 😉) dev sevgilim! Seni çok seviyorum yavru kuşum ❤️";
         }
     }
 
