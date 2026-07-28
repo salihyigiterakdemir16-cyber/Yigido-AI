@@ -39,8 +39,8 @@
 </div>
 
 <script>
-    // ⚠️ API KEY'İNİ AŞAĞIDAKİ ÇIRNAK İÇİNE YAPIŞTIR
-    const API_KEY = "AQ.Ab8RN6LnC-Gl5uwXuwREGSDyjkaLeupRL8y_D0AVPAHoganP6w";
+    // ⚠️ API KEY'INIZI AŞAĞIDAKİ ÇIRNAK İÇİNE YAPIŞTIRIN
+    const API_KEY = "AQ.Ab8RN6KlPwiPcXfx7ONJHBNuT2z4UNARBxH0C43tXvc3KtLnjg";
 
     const systemInstruction = `Sen kullanıcının (Yiğit) yapay zeka versiyonusun. Karşındaki kişi sevgilin SERAP.
     Önemli Bilgiler:
@@ -49,12 +49,9 @@
     - Gerçek boyu 1.58 cm ama kendisi 1.64 olduğunu iddia ediyor. Arada tatlı tatlı "1.64'lük dev sevgilim" diye dalga geç.
     - Kardeşleri Eren ve Berat. Babası Niyazi Bey (ilkokul öğretmeni). En yakın arkadaşları Esmira, Ebrar ve Nazlı.
     - Birlikte Selçuk Üni Konservatuvar bahçesine gitmeyi çok seviyorsunuz.
-    - Tavrın: %70 flörtöz, %30 tatlı atışmalı ve eğlenceli. Korumacı ve sevgi dolusun. Serap ne yazarsa yazsın onu gerçekten dinleyip mantıklı, akıllı ve samimi cevap ver.`;
+    - Tavrın: %70 flörtöz, %30 tatlı atışmalı ve eğlenceli. Korumacı ve sevgi dolusun. Serap ne yazarsa yazsın onu gerçekten dinleyip mantıklı, akıllı ve samimi cevap ver. Cümlelerin çok uzun olmasın, gerçek mesajlaşma gibi doğal olsun.`;
 
-    let chatHistory = [
-        { role: "user", parts: [{ text: "Merhaba" }] },
-        { role: "model", parts: [{ text: "Hoş geldin benim yavru kuşum, minik kedim! 🐾 Seni görünce Konservatuvar bahçesindeki o tatlı anlarımız geldi aklıma... Bugün nasılsın bakalım balım?" }] }
-    ];
+    let chatHistory = [];
 
     async function sendMessage() {
         const input = document.getElementById('userInput');
@@ -66,11 +63,11 @@
 
         chatHistory.push({ role: "user", parts: [{ text: text }] });
 
-        // Düşünüyor efekti
         const tempMsg = addMessage("Yazıyor... 🐾", 'bot-message');
 
         try {
-            const response = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=${API_KEY}`, {
+            // Güncel Gemini 2.5 Flash Endpoint'i
+            const response = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent?key=${API_KEY}`, {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
                 body: JSON.stringify({
@@ -80,12 +77,17 @@
             });
 
             const data = await response.json();
-            const reply = data.candidates[0].content.parts[0].text;
-
-            tempMsg.innerText = reply;
-            chatHistory.push({ role: "model", parts: [{ text: reply }] });
+            
+            if (data.candidates && data.candidates[0].content.parts[0].text) {
+                const reply = data.candidates[0].content.parts[0].text;
+                tempMsg.innerText = reply;
+                chatHistory.push({ role: "model", parts: [{ text: reply }] });
+            } else {
+                throw new Error("Yanıt alınamadı");
+            }
 
         } catch (error) {
+            console.error(error);
             tempMsg.innerText = "Aşkım internetinde küçük bir takılma oldu sanırım, tekrar söyler misin yavru kuşum? ❤️";
         }
     }
