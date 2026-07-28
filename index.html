@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sadece Senin İçin ❤️</title>
+    <style>
+        * { box-sizing: border-box; margin: 0; padding: 0; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; }
+        body { background: linear-gradient(135deg, #ff9a9e 0%, #fecfef 100%); height: 100vh; display: flex; justify-content: center; align-items: center; }
+        .chat-container { width: 90%; max-width: 420px; height: 80vh; background: rgba(255, 255, 255, 0.95); border-radius: 24px; box-shadow: 0 10px 30px rgba(0,0,0,0.15); display: flex; flex-direction: column; overflow: hidden; }
+        .chat-header { background: #ff6b81; color: white; padding: 18px; text-align: center; font-weight: bold; font-size: 1.1rem; }
+        .chat-box { flex: 1; padding: 15px; overflow-y: auto; display: flex; flex-direction: column; gap: 12px; }
+        .message { max-width: 80%; padding: 12px 16px; border-radius: 18px; font-size: 0.95rem; line-height: 1.4; }
+        .user-message { background: #ff6b81; color: white; align-self: flex-end; border-bottom-right-radius: 4px; }
+        .bot-message { background: #f1f2f6; color: #2f3542; align-self: flex-start; border-bottom-left-radius: 4px; }
+        .input-area { padding: 12px; background: white; display: flex; gap: 8px; border-top: 1px solid #eee; }
+        input { flex: 1; padding: 12px 16px; border: 1px solid #ddd; border-radius: 25px; outline: none; font-size: 0.95rem; }
+        button { background: #ff6b81; color: white; border: none; padding: 0 20px; border-radius: 25px; font-weight: bold; cursor: pointer; }
+    </style>
+</head>
+<body>
+
+<div class="chat-container">
+    <div class="chat-header">💖 Seninle Konuşmak İçin Buradayım 💖</div>
+    <div class="chat-box" id="chatBox">
+        <div class="message bot-message">Hoş geldin güzelim! Seni çok özledim. Bugün nasılsın bakalım balım?</div>
+    </div>
+    <div class="input-area">
+        <input type="text" id="userInput" placeholder="Mesajını yaz bir tanem..." onkeypress="handleKeyPress(event)">
+        <button onclick="sendMessage()">Gönder</button>
+    </div>
+</div>
+
+<script>
+    const yanitlar = [
+        "Aşkım seni dinlemek dünyanın en güzel şeyi... Kendine dikkat ediyorsun değil mi? Yemeğini yedin mi bakayım?",
+        "Gözlerimin önüne gülüşün geldi yine güzelim... Neyse, çok şımarma hemen tatlı tatlı dalga geçmeyeyim seninle! 😜",
+        "Bir tanem sen böyle tatlı konuşunca sana olan sevgim iki katına çıkıyor. Yine de arayı çok uzatma, asıl halim seni çok özlüyor!",
+        "Balım benim, ne dersen de haklısın ama önce bir dinlen bakalım. Çok yorma kendini!",
+        "Efendim aşkım? Seni dinliyorum. Bütün gün seni düşünmekten başka iş yapamadım zaten...",
+        "Aşırı tatlısın şu an ama hemen yelkenleri suya indirmeyeyim! Biraz daha flört etmemiz lazım galiba 😉"
+    ];
+
+    function sendMessage() {
+        const input = document.getElementById('userInput');
+        const text = input.value.trim();
+        if (!text) return;
+        addMessage(text, 'user-message');
+        input.value = '';
+        setTimeout(() => {
+            const reply = yanitlar[Math.floor(Math.random() * yanitlar.length)];
+            addMessage(reply, 'bot-message');
+        }, 800);
+    }
+
+    function addMessage(text, className) {
+        const chatBox = document.getElementById('chatBox');
+        const msg = document.createElement('div');
+        msg.className = `message ${className}`;
+        msg.innerText = text;
+        chatBox.appendChild(msg);
+        chatBox.scrollTop = chatBox.scrollHeight;
+    }
+
+    function handleKeyPress(e) { if (e.key === 'Enter') sendMessage(); }
+</script>
+
+</body>
+</html>
